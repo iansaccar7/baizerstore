@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BaizerStore — Produtos Apple</title>
+<meta name="description" content="iPhone lacrado e openbox com nota fiscal, garantia e entrega em até 24 horas. Mais de 10 mil clientes satisfeitos.">
+<style>
+:root{
+  --bg:#000; --surface:#0a0a0a; --surface2:#141416;
+  --line:rgba(255,255,255,.12); --line2:rgba(255,255,255,.06);
+  --txt:#f5f5f7; --muted:#86868b; --link:#2997ff;
+  --nav:48px; --pad:clamp(20px,5vw,32px); --max:1120px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav) + 16px);-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.45;letter-spacing:-.01em;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.sec{padding:clamp(72px,11vw,128px) 0}
+.eyebrow{font-size:clamp(13px,1.4vw,15px);color:var(--muted);letter-spacing:.02em;font-weight:500}
+h1,h2,h3{letter-spacing:-.035em;font-weight:600;line-height:1.05}
+h1{font-size:clamp(44px,9vw,88px)}
+h2{font-size:clamp(32px,5.6vw,56px)}
+h3{font-size:clamp(19px,2.2vw,24px);letter-spacing:-.02em}
+.lead{color:var(--muted);font-size:clamp(16px,2vw,21px);line-height:1.5;max-width:56ch}
+.center{text-align:center}.center .lead{margin-inline:auto}
+.muted{color:var(--muted)}
+.small{font-size:13px;line-height:1.5}
+
+/* nav */
+header{position:fixed;inset:0 0 auto;height:var(--nav);z-index:100;
+  background:rgba(0,0,0,.72);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--line2)}
+header .wrap{height:100%;display:flex;align-items:center;gap:28px}
+.logo{font-weight:600;font-size:17px;letter-spacing:-.02em;margin-right:auto}
+.logo span{color:var(--muted);font-weight:400}
+nav{display:flex;gap:26px;font-size:13px;color:#d2d2d7}
+nav a{opacity:.85;transition:opacity .2s}
+nav a:hover{opacity:1}
+.navcta{font-size:13px;font-weight:500;padding:6px 14px;border-radius:980px;background:var(--txt);color:#000}
+@media(max-width:860px){nav{display:none}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 26px;border-radius:980px;
+  font-size:16px;font-weight:500;transition:transform .2s,background .2s,opacity .2s;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-p{background:var(--txt);color:#000}
+.btn-p:hover{background:#fff}
+.btn-s{border:1px solid var(--line);color:var(--txt)}
+.btn-s:hover{background:rgba(255,255,255,.06)}
+.link{color:var(--link);font-size:16px;display:inline-flex;align-items:center;gap:4px}
+.link:hover{text-decoration:underline}
+.actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center}
+
+/* slots de imagem */
+.slot{position:relative;display:grid;place-items:center;aspect-ratio:var(--ar,1);width:100%;overflow:hidden;border-radius:18px}
+.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.slot.empty img{display:none}
+.slot.empty{border:1px dashed rgba(255,255,255,.16);background:
+  radial-gradient(120% 90% at 50% 0%,rgba(255,255,255,.05),transparent 70%)}
+.slot.empty::after{content:"img/" attr(data-file);position:absolute;font-size:11px;letter-spacing:0;
+  color:#5b5b60;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;padding:0 12px;text-align:center;line-height:1.6}
+
+/* hero */
+.hero{padding-top:calc(var(--nav) + clamp(48px,8vw,88px));padding-bottom:clamp(48px,7vw,80px);text-align:center}
+.hero h1{margin:.18em 0 .1em}
+.price-line{font-size:clamp(15px,1.8vw,18px);color:var(--muted);margin-bottom:26px}
+.price-line b{color:var(--txt);font-weight:600}
+
+/* device stage */
+.stage{margin:clamp(28px,5vw,48px) auto 0;max-width:430px;perspective:1400px}
+.device{transform-style:preserve-3d;animation:float 9s ease-in-out infinite;transition:transform .75s cubic-bezier(.32,.72,0,1),opacity .35s}
+.device.swap{opacity:0;transform:rotateY(80deg) scale(.94)}
+@media(max-width:600px){.stage{max-width:290px}}
+@keyframes float{
+  0%,100%{transform:rotateY(-13deg) rotateX(4deg) translateY(0)}
+  50%{transform:rotateY(13deg) rotateX(-2deg) translateY(-14px)}
+}
+@media(prefers-reduced-motion:reduce){.device{animation:none}}
+.glow{position:absolute;inset:auto 0 -6%;height:36%;filter:blur(46px);opacity:.5;z-index:-1;
+  background:radial-gradient(60% 100% at 50% 100%,var(--glow,#3a3a3f),transparent 72%);transition:background .6s}
+.stage-in{position:relative}
+.models{display:flex;gap:6px;justify-content:center;margin-bottom:26px;overflow-x:auto;scrollbar-width:none;
+  padding-inline:var(--pad);margin-inline:calc(var(--pad) * -1)}
+.models::-webkit-scrollbar{display:none}
+.models button{flex:0 0 auto}
+.models button{font-size:13px;padding:7px 15px;border-radius:980px;color:var(--muted);border:1px solid transparent;transition:.25s}
+.models button:hover{color:var(--txt)}
+.models button[aria-selected="true"]{color:var(--txt);border-color:var(--line);background:rgba(255,255,255,.06)}
+.colors{display:flex;gap:14px;justify-content:center;align-items:center;margin-top:30px;min-height:26px}
+.colors button{width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);
+  position:relative;transition:transform .2s}
+.colors button:hover{transform:scale(1.12)}
+.colors button[aria-selected="true"]::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(255,255,255,.55)}
+.color-name{margin-top:14px;font-size:13px;color:var(--muted);min-height:19px}
+
+/* trust bar */
+.trust{border-block:1px solid var(--line2);padding:clamp(36px,5vw,52px) 0}
+.trust ul{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,40px);text-align:center}
+.trust li strong{display:block;font-size:clamp(16px,1.9vw,19px);font-weight:600;letter-spacing:-.02em;margin-bottom:5px}
+.trust li span{font-size:13px;color:var(--muted);line-height:1.5}
+@media(max-width:720px){.trust ul{grid-template-columns:repeat(2,1fr);gap:30px 20px}}
+
+/* tabs */
+.tabs{display:inline-flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:980px;margin:28px auto 0}
+.tabs button{font-size:14px;padding:8px 20px;border-radius:980px;color:var(--muted);transition:.25s}
+.tabs button[aria-selected="true"]{background:var(--txt);color:#000;font-weight:500}
+
+/* grid de modelos */
+.grid{display:grid;gap:14px;margin-top:44px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:900px){.g3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.g3,.g2{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line2);border-radius:20px;padding:26px 24px 24px;
+  display:flex;flex-direction:column;transition:border-color .25s,transform .25s}
+.card:hover{border-color:var(--line);transform:translateY(-3px)}
+.tag{align-self:flex-start;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--line);border-radius:980px;padding:4px 10px;margin-bottom:16px}
+.card h3{margin-bottom:4px}
+.card .spec{font-size:13px;color:var(--muted);margin-bottom:20px}
+.card .from{margin-top:auto;font-size:13px;color:var(--muted)}
+.card .val{font-size:clamp(22px,2.6vw,27px);font-weight:600;letter-spacing:-.03em;color:var(--txt);display:block;margin:2px 0 3px}
+.card .warr{font-size:12px;color:var(--muted);margin-top:12px;padding-top:12px;border-top:1px solid var(--line2)}
+.note{font-size:12px;color:#5b5b60;margin-top:26px;line-height:1.6}
+
+/* categorias */
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px}
+@media(max-width:900px){.cats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.cats{grid-template-columns:1fr}}
+.cat{background:var(--surface);border:1px solid var(--line2);border-radius:22px;padding:32px 28px;
+  display:flex;flex-direction:column;min-height:320px;transition:border-color .25s,transform .25s}
+.cat:hover{border-color:var(--line);transform:translateY(-3px)}
+.cat h3{margin-bottom:6px}
+.cat p{font-size:14px;color:var(--muted);line-height:1.5}
+.cat .slot{margin-top:auto}
+
+/* faixas */
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,6vw,72px);align-items:center}
+@media(max-width:860px){.split{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line2);border-radius:26px;padding:clamp(32px,5vw,56px)}
+.svcs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:44px}
+@media(max-width:900px){.svcs{grid-template-columns:repeat(2,1fr)}}
+.svc{border:1px solid var(--line2);border-radius:16px;padding:22px 20px;font-size:15px;font-weight:500;
+  background:var(--surface);transition:border-color .25s}
+.svc:hover{border-color:var(--line)}
+.svc span{display:block;font-size:12px;color:var(--muted);font-weight:400;margin-top:6px}
+
+/* cta final */
+.final{text-align:center;padding:clamp(88px,13vw,152px) 0;
+  background:radial-gradient(90% 120% at 50% 0%,#141416,#000 68%);border-top:1px solid var(--line2)}
+
+/* footer */
+footer{border-top:1px solid var(--line2);padding:44px 0 56px;font-size:12px;color:var(--muted)}
+.frow{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+footer a:hover{color:var(--txt)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#topo">Baizer<span>Store</span></a>
+    <nav>
+      <a href="#iphone">iPhone</a>
+      <a href="#linha">Mac e iPad</a>
+      <a href="#troca">Troca</a>
+      <a href="#servicos">Assistência</a>
+      <a href="#garantia">Garantia</a>
+    </nav>
+    <a class="navcta" href="https://ig.me/m/baizer.store" target="_blank" rel="noopener">Falar agora</a>
+  </div>
+</header>
+
+<main id="topo">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Novo · iPhone 17 Pro Max</p>
+    <h1 id="heroModelo">iPhone 17 Pro Max</h1>
+    <p class="lead center" style="margin:0 auto 20px">Lacrado, com nota fiscal e um ano de garantia Apple. Na sua mão em até 24 horas.</p>
+    <p class="price-line">A partir de <b id="heroPreco">R$ 7.990</b> à vista · ou em até 12x</p>
+    <div class="actions">
+      <a class="btn btn-p" href="https://ig.me/m/baizer.store" target="_blank" rel="noopener">Falar com um especialista</a>
+      <a class="link" href="#iphone">Ver todos os modelos ›</a>
+    </div>
+
+    <div class="stage">
+      <div class="models" id="modelTabs" role="tablist" aria-label="Modelos"></div>
+      <div class="stage-in">
+        <div class="glow" id="glow"></div>
+        <div class="device" id="device">
+          <div class="slot" style="--ar:4/5"><img id="heroImg" alt="iPhone"></div>
+        </div>
+      </div>
+      <div class="colors" id="colorDots" role="tablist" aria-label="Cores"></div>
+      <p class="color-name" id="colorName"></p>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust">
+  <div class="wrap">
+    <ul>
+      <li><strong>Lacrado e openbox</strong><span>Aparelhos originais, importados dos Estados Unidos</span></li>
+      <li><strong>Nota fiscal</strong><span>Garantia formal em todo aparelho vendido</span></li>
+      <li><strong>Até 24 horas</strong><span>Receba rápido, com acompanhamento da entrega</span></li>
+      <li><strong>+10 mil clientes</strong><span>Histórico público de vendas no Instagram</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- IPHONE -->
+<section class="sec" id="iphone">
+  <div class="wrap center">
+    <p class="eyebrow">iPhone</p>
+    <h2>Escolha o seu.</h2>
+    <p class="lead center" style="margin-top:16px">Lacrado com garantia Apple de um ano, ou openbox com garantia Baizer de seis meses. Mesmo aparelho, dois caminhos.</p>
+    <div class="tabs" id="condTabs" role="tablist" aria-label="Condição">
+      <button role="tab" aria-selected="true" data-cond="lacrado">Lacrado</button>
+      <button role="tab" aria-selected="false" data-cond="openbox">Openbox</button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="grid g3" id="iphoneGrid"></div>
+    <p class="note center" id="condNota"></p>
+  </div>
+</section>
+
+<!-- CATEGORIAS -->
+<section class="sec" id="linha" style="border-top:1px solid var(--line2)">
+  <div class="wrap center">
+    <p class="eyebrow">Linha completa</p>
+    <h2>Todo o ecossistema.</h2>
+    <p class="lead center" style="margin-top:16px">Do Mac ao AirPods, com a mesma checagem, a mesma nota e a mesma garantia.</p>
+  </div>
+  <div class="wrap">
+    <div class="cats">
+      <a class="cat" href="https://ig.me/m/baizer.store" target="_blank" rel="noopener">
+        <h3>MacBook</h3><p>Air e Pro, lacrados e seminovos, com bateria checada.</p>
+        <div class="slot" style="--ar:4/3" data-file="macbook.png"><img src="img/macbook.png" alt="MacBook"></div>
+      </a>
+      <a class="cat" href="https://ig.me/m/baizer.store" target="_blank" rel="noopener">
+        <h3>iPad</h3><p>Da linha base ao Pro, com opção de Wi-Fi ou celular.</p>
+        <div class="slot" style="--ar:4/3" data-file="ipad.png"><img src="img/ipad.png" alt="iPad"></div>
+      </a>
+      <a class="cat" href="https://ig.me/m/baizer.store" target="_blank" rel="noopener">
+        <h3>Apple Watch</h3><p>Series e Ultra. Bateria para mais de um dia e GPS de dupla frequência.</p>
+        <div class="slot" style="--ar:4/3" data-file="apple-watch.png"><img src="img/apple-watch.png" alt="Apple Watch"></div>
+      </a>
+      <a class="cat" href="https://ig.me/m/baizer.store" target="_blank" rel="noopener">
+        <h3>AirPods</h3><p>Pro, Max e a linha padrão, todos lacrados.</p>
+        <div class="slot" style="--ar:4/3" data-file="airpods.png"><img src="img/airpods.png" alt="AirPods"></div>
+      </a>
+      <a class="cat" href="https://ig.me/m/baizer.store" target="_blank" rel="noopener">
+        <h3>Android</h3><p>Tela ampla, boa câmera e bateria longa gastando menos.</p>
+        <div class="slot" style="--ar:4/3" data-file="android.png"><img src="img/android.png" alt="Android"></div>
+      </a>
+      <a class="cat" href="https://ig.me/m/baizer.store" target="_blank" rel="noopener">
+        <h3>Acessórios</h3><p>Capas, cabos, carregadores e películas para o seu aparelho.</p>
+        <div class="slot" style="--ar:4/3" data-file="acessorios.png"><img src="img/acessorios.png" alt="Acessórios"></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TROCA -->
+<section class="sec" id="troca" style="border-top:1px solid var(--line2)">
+  <div class="wrap">
+    <div class="panel split">
+      <div>
+        <p class="eyebrow">Avaliação de aparelho</p>
+        <h2 style="margin:.16em 0 18px">Troque. Evolua.</h2>
+        <p class="lead">Avaliamos o seu iPhone usado e ele entra como parte do pagamento do novo. Sem burocracia, sem dor de cabeça.</p>
+        <div class="actions" style="justify-content:flex-start;margin-top:30px">
+          <a class="btn btn-p" href="https://ig.me/m/baizer.store" target="_blank" rel="noopener">Quero avaliar meu iPhone</a>
+        </div>
+      </div>
+      <div class="slot" style="--ar:1/1" data-file="troca.png"><img src="img/troca.png" alt="Avaliação de iPhone usado"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICOS -->
+<section class="sec" id="servicos">
+  <div class="wrap center">
+    <p class="eyebrow">Assistência</p>
+    <h2>Quebrou? A gente resolve.</h2>
+    <p class="lead center" style="margin-top:16px">Reparo com peça de qualidade e prazo combinado antes de começar.</p>
+  </div>
+  <div class="wrap">
+    <div class="svcs">
+      <div class="svc">Celulares<span>Tela, bateria, conector</span></div>
+      <div class="svc">Notebooks<span>Hardware e software</span></div>
+      <div class="svc">CPU<span>Reparo e montagem</span></div>
+      <div class="svc">Apple Watch<span>Tela e bateria</span></div>
+      <div class="svc">Acessórios<span>Capas, cabos e películas</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTIA -->
+<section class="sec" id="garantia" style="border-top:1px solid var(--line2)">
+  <div class="wrap center">
+    <p class="eyebrow">Como funciona</p>
+    <h2>Sem letra miúda.</h2>
+  </div>
+  <div class="wrap">
+    <div class="grid g3">
+      <div class="card"><span class="tag">Lacrado</span><h3>Caixa fechada</h3>
+        <p class="spec">Aparelho novo, nunca aberto, importado dos Estados Unidos.</p>
+        <p class="muted small">Um ano de garantia Apple, com nota fiscal em nome do cliente.</p></div>
+      <div class="card"><span class="tag">Openbox</span><h3>Zero de uso, caixa aberta</h3>
+        <p class="spec">Aparelho sem uso cuja embalagem foi aberta para conferência.</p>
+        <p class="muted small">Seis meses de garantia Baizer, com nota fiscal. Melhor preço da linha.</p></div>
+      <div class="card"><span class="tag">Entrega</span><h3>Em até 24 horas</h3>
+        <p class="spec">Envio rápido com acompanhamento do pedido do início ao fim.</p>
+        <p class="muted small">Condições de pagamento e frete confirmadas no atendimento.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="final">
+  <div class="wrap">
+    <h2>Fale com um especialista.</h2>
+    <p class="lead center" style="margin:18px auto 32px">Responde rápido, tira dúvida de modelo e confirma preço e disponibilidade na hora.</p>
+    <div class="actions">
+      <a class="btn btn-p" href="https://ig.me/m/baizer.store" target="_blank" rel="noopener">Chamar no Direct</a>
+      <a class="btn btn-s" href="https://www.instagram.com/baizer.store/" target="_blank" rel="noopener">Ver o Instagram</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap frow">
+    <p>© <span id="ano"></span> BaizerStore · Produtos Apple</p>
+    <p>Preços e disponibilidade sujeitos a confirmação no atendimento.</p>
+    <p><a href="https://www.instagram.com/baizer.store/" target="_blank" rel="noopener">@baizer.store</a></p>
+  </div>
+</footer>
+
+<script>
+/* ─── CONFIG: edite aqui ────────────────────────────────────────────────
+   CONTATO  → troque por https://wa.me/55DDDNUMERO quando tiver o WhatsApp
+   MODELOS  → nomes de cor e hex do destaque (confira antes de publicar)
+   Imagens  → salve em img/ com o nome que aparece no slot vazio        */
+
+const MODELOS = [
+  {id:'iphone-17-pro-max', nome:'iPhone 17 Pro Max', preco:'R$ 7.990',
+   cores:[['Laranja Cósmico','#f88a46'],['Azul Profundo','#3f4658'],['Prata','#e6e6e4']]},
+  {id:'iphone-17-pro', nome:'iPhone 17 Pro', preco:'R$ 7.590',
+   cores:[['Laranja Cósmico','#f88a46'],['Azul Profundo','#3f4658'],['Prata','#e6e6e4']]},
+  {id:'iphone-17-air', nome:'iPhone 17 Air', preco:'R$ 5.990',
+   cores:[['Azul Céu','#cddfeb'],['Dourado Claro','#e8ddc4'],['Branco Nuvem','#f3f3f3'],['Preto Espacial','#363636']]},
+  {id:'iphone-17', nome:'iPhone 17', preco:'R$ 5.590',
+   cores:[['Lavanda','#e5d9e8'],['Névoa','#a8b9cf'],['Sálvia','#b5c098'],['Branco','#eeeeec'],['Preto','#2f3031']]},
+  {id:'iphone-17e', nome:'iPhone 17e', preco:'R$ 4.590',
+   cores:[['Rosa Pálido','#f7dcda'],['Branco','#f5f5f2'],['Preto','#3a3a3a']]}
+];
+
+const LACRADO = [
+  ['iPhone 17 Pro Max','6,9 polegadas','R$ 7.990',''],
+  ['iPhone 17 Pro','6,3 polegadas','R$ 7.590',''],
+  ['iPhone 17 Air','6,5 polegadas','R$ 5.990',''],
+  ['iPhone 17','6,3 polegadas','R$ 5.590',''],
+  ['iPhone 17e','6,1 polegadas','R$ 4.590',''],
+  ['iPhone 16 Pro Max','6,9 polegadas','R$ 6.990','CPO'],
+  ['iPhone 16 Pro','6,3 polegadas','R$ 5.690','CPO'],
+  ['iPhone 16 Plus','6,7 polegadas','R$ 5.290',''],
+  ['iPhone 16','6,1 polegadas','R$ 4.890',''],
+  ['iPhone 15 Pro Max','6,7 polegadas','R$ 5.790','CPO'],
+  ['iPhone 15 Pro','6,1 polegadas','R$ 4.590','CPO'],
+  ['iPhone 15 Plus','6,7 polegadas','',''],
+  ['iPhone 15','6,1 polegadas','R$ 4.290',''],
+  ['iPhone 14 Pro Max','6,7 polegadas','R$ 4.890','CPO'],
+  ['iPhone 14 Pro','6,1 polegadas','R$ 3.990','CPO'],
+  ['iPhone 14','6,1 polegadas','R$ 3.790',''],
+  ['iPhone 13 Pro Max','6,7 polegadas','R$ 4.390','CPO'],
+  ['iPhone 13','6,1 polegadas','R$ 3.290','CPO']
+];
+
+const OPENBOX = [
+  ['iPhone 17 Pro','6,3 polegadas','R$ 6.790',''],
+  ['iPhone 17 Air','6,5 polegadas','R$ 5.390',''],
+  ['iPhone 17','6,3 polegadas','R$ 4.890',''],
+  ['iPhone 16 Pro Max','6,9 polegadas','R$ 5.890',''],
+  ['iPhone 16 Pro','6,3 polegadas','R$ 4.890',''],
+  ['iPhone 16','6,1 polegadas','R$ 3.990',''],
+  ['iPhone 15 Pro Max','6,7 polegadas','R$ 4.590',''],
+  ['iPhone 15 Pro','6,1 polegadas','R$ 3.990',''],
+  ['iPhone 15 Plus','6,7 polegadas','R$ 3.390',''],
+  ['iPhone 15','6,1 polegadas','R$ 3.090',''],
+  ['iPhone 14 Pro Max','6,7 polegadas','R$ 3.890',''],
+  ['iPhone 14 Pro','6,1 polegadas','R$ 3.390',''],
+  ['iPhone 14 Plus','6,7 polegadas','R$ 2.590',''],
+  ['iPhone 14','6,1 polegadas','R$ 2.390',''],
+  ['iPhone 13 Pro Max','6,7 polegadas','R$ 3.290',''],
+  ['iPhone 13 Pro','6,1 polegadas','R$ 2.890',''],
+  ['iPhone 13','6,1 polegadas','R$ 2.299','']
+];
+
+const CONTATO = 'https://ig.me/m/baizer.store';
+const $ = s => document.querySelector(s);
+
+/* ─── Hero: modelos + cores ─────────────────────────────────────────── */
+let mi = 0, ci = 0, auto;
+const device = $('#device'), heroImg = $('#heroImg'), slot = heroImg.parentElement;
+
+function pintar(){
+  const m = MODELOS[mi], [nome, hex] = m.cores[ci];
+  const cor = nome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-');
+  device.classList.add('swap');
+  setTimeout(() => {
+    const c = 'img/' + m.id + '-' + cor, b = 'img/' + m.id;
+    slot.dataset.file = m.id + '-' + cor + '.webp';
+    foto(heroImg, [c + '.webp', c + '.png', b + '.webp', b + '.png']);
+    device.classList.remove('swap');
+  }, 260);
+  $('#glow').style.setProperty('--glow', hex);
+  $('#heroModelo').textContent = m.nome;
+  $('#heroPreco').textContent = m.preco;
+  $('#colorName').textContent = nome;
+  [...$('#modelTabs').children].forEach((b, i) => b.setAttribute('aria-selected', i === mi));
+  [...$('#colorDots').children].forEach((b, i) => b.setAttribute('aria-selected', i === ci));
+}
+
+/* tenta img/modelo-cor.png; se não existir, cai pra img/modelo.png; senão marca o slot */
+function foto(el, srcs){
+  let i = 0;
+  const proxima = () => {
+    if (i < srcs.length) el.src = srcs[i++];
+    else { el.removeAttribute('src'); el.parentElement.classList.add('empty'); }
+  };
+  el.onerror = proxima;
+  el.onload = () => el.parentElement.classList.remove('empty');
+  proxima();
+}
+
+function dots(){
+  $('#colorDots').innerHTML = MODELOS[mi].cores
+    .map(([n, h], i) => `<button role="tab" title="${n}" data-i="${i}" style="background:${h}"></button>`).join('');
+}
+
+$('#modelTabs').innerHTML = MODELOS
+  .map((m, i) => `<button role="tab" data-i="${i}">${m.nome.replace('iPhone ', '')}</button>`).join('');
+
+$('#modelTabs').onclick = e => { const b = e.target.closest('button'); if (!b) return; mi = +b.dataset.i; ci = 0; dots(); pintar(); parar(); };
+$('#colorDots').onclick = e => { const b = e.target.closest('button'); if (!b) return; ci = +b.dataset.i; pintar(); parar(); };
+
+function parar(){ clearInterval(auto); }
+auto = setInterval(() => { ci = (ci + 1) % MODELOS[mi].cores.length; if (!ci) { mi = (mi + 1) % MODELOS.length; dots(); } pintar(); }, 4200);
+
+dots(); pintar();
+
+/* ─── Grid de iPhones ───────────────────────────────────────────────── */
+function grid(cond){
+  const lista = cond === 'lacrado' ? LACRADO : OPENBOX;
+  const garantia = cond === 'lacrado' ? 'Um ano de garantia Apple' : 'Seis meses de garantia Baizer';
+  $('#iphoneGrid').innerHTML = lista.map(([n, t, p, cpo]) => `
+    <a class="card" href="${CONTATO}" target="_blank" rel="noopener">
+      <span class="tag">${cond === 'lacrado' ? (cpo ? 'Lacrado · CPO' : 'Lacrado') : 'Openbox'}</span>
+      <h3>${n}</h3><p class="spec">${t}</p>
+      <p class="from">${p ? 'A partir de' : ''}<span class="val">${p || 'Consultar'}</span>${p ? 'à vista · ou em até 12x' : 'valor sob consulta'}</p>
+      <p class="warr">${garantia}</p>
+    </a>`).join('');
+  $('#condNota').textContent = cond === 'lacrado'
+    ? 'Valores à vista com desconto, a partir do menor armazenamento. Parcelamento em até 12x nas bandeiras Visa e Master. Consulte disponibilidade e valores no momento da compra.'
+    : 'Openbox: aparelho sem uso com a caixa aberta para conferência. Valores à vista com desconto, a partir do menor armazenamento. Consulte disponibilidade e valores no momento da compra.';
+}
+
+$('#condTabs').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...e.currentTarget.children].forEach(x => x.setAttribute('aria-selected', x === b));
+  grid(b.dataset.cond);
+};
+grid('lacrado');
+
+/* ─── Slots estáticos sem imagem viram placeholder ─────────────────── */
+document.querySelectorAll('.slot img:not(#heroImg)').forEach(img => {
+  const b = img.getAttribute('src').replace(/\.\w+$/, '');
+  img.parentElement.dataset.file = b.split('/').pop() + '.webp';
+  foto(img, [b + '.webp', b + '.png']);
+});
+
+/* ─── Links de contato + ano ────────────────────────────────────────── */
+document.querySelectorAll('a[href="https://ig.me/m/baizer.store"]').forEach(a => a.href = CONTATO);
+$('#ano').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
