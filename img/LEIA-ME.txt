@@ -1,0 +1,22 @@
+IMAGENS DA LP — BAIZERSTORE
+
+De onde vieram
+  Renders oficiais da Apple (apple.com/br), um por cor de cada modelo,
+  em WebP com fundo transparente. As fotos de categoria (MacBook, iPad,
+  Watch, AirPods, Android, acessórios, troca) vieram do site do cliente.
+
+Formato
+  WebP, lado maior 820 px, fundo transparente. Total da pasta: ~800 KB.
+  O site procura .webp primeiro e cai para .png se não achar — então dá
+  para substituir qualquer imagem por um PNG de mesmo nome sem mexer no código.
+
+Trocar uma imagem
+  Salve por cima com o mesmo nome. Nada a editar no index.html.
+
+Trocar nome ou hex de uma cor
+  Array MODELOS no topo do <script> do index.html. O nome do arquivo é
+  gerado a partir do nome da cor: minúsculo, sem acento, espaço vira hífen.
+  "Rosa Pálido" procura iphone-17e-rosa-palido.webp.
+
+Se faltar alguma
+  O espaço aparece tracejado com o nome do arquivo que o site esperava.
