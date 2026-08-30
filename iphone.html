@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>iPhone — BaizerStore</title>
+<meta name="description" content="iPhone lacrado com garantia Apple ou openbox com garantia Baizer. Preços à vista e em até 18x.">
+<link rel="stylesheet" href="assets/estilo.css">
+</head>
+<body>
+<main>
+
+<section class="capa">
+  <div class="wrap">
+    <p class="eyebrow sobe">iPhone</p>
+    <h1 class="sobe">Escolha o seu.</h1>
+    <p class="lead center sobe" style="margin:18px auto 0">Lacrado com garantia Apple de um ano, ou openbox com garantia Baizer de seis meses. Mesmo aparelho, dois caminhos.</p>
+    <div class="slot sobe" style="--ar:4/5"><img src="img/iphone-17-pro-max.png" alt="iPhone 17 Pro Max"></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap center"><div class="tabs sobe" id="cond" role="tablist" aria-label="Condição">
+      <button role="tab" aria-selected="true" data-c="Lacrado">Lacrado</button>
+      <button role="tab" aria-selected="false" data-c="Openbox">Openbox</button>
+    </div></div>
+  <div class="wrap">
+    <div class="grid g3" id="grade"></div>
+    <p class="note center sobe">Valores à vista com desconto, a partir do menor armazenamento. Um ano de garantia Apple. CPO indica aparelho lacrado certificado pela Apple. Parcelamento em até 18x no cartão, com acréscimo. Consulte disponibilidade e valores no momento da compra.</p>
+  </div>
+</section>
+
+</main>
+<script src="assets/site.js"></script>
+<script>
+const NOTAS = {Lacrado: `Valores à vista com desconto, a partir do menor armazenamento. Um ano de garantia Apple. CPO indica aparelho lacrado certificado pela Apple. Parcelamento em até 18x no cartão, com acréscimo. Consulte disponibilidade e valores no momento da compra.`, Openbox: `Openbox é o aparelho sem uso cuja caixa foi aberta para conferência. Seis meses de garantia Baizer (três meses no iPhone 12 Pro e anteriores), bateria acima de 85%, sem peças trocadas e sem histórico de manutenção. Consulte disponibilidade e valores no momento da compra.`};
+const GAR = {Lacrado: 'Um ano de garantia Apple', Openbox: 'Seis meses de garantia Baizer'};
+function mostra(c) {
+  grade('#grade', c === 'Lacrado' ? CATALOGO.iphoneLacrado : CATALOGO.iphoneOpenbox, GAR[c]);
+  document.querySelector('.note').textContent = NOTAS[c];
+}
+document.querySelector('#cond').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...e.currentTarget.children].forEach(x => x.setAttribute('aria-selected', x === b));
+  mostra(b.dataset.c);
+};
+mostra('Lacrado');
+</script>
+</body>
+</html>
